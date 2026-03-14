@@ -19,6 +19,7 @@
         .sidebar .nav-link:hover  { background-color: rgba(255,255,255,0.1); color: white; }
         .sidebar .nav-link.active { background: rgba(255,255,255,0.2); border-left: 4px solid white; }
         .main-content { padding: 20px; }
+        .action-buttons .btn { margin-right: 5px; }
         .book-cover {
             width: 50px; height: 70px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -27,12 +28,41 @@
             color: white; font-size: 1.3rem;
         }
         .borrow-btn { border-radius: 20px; font-size: 0.85rem; }
+        .card-body {
+            padding: 0;
+        }
+        .table {
+            table-layout: fixed;
+            width: 100%;
+            margin-bottom: 0;
+        }
+        .table th,
+        .table td {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: middle;
+            padding-left: 12px;
+        }
+        .table th {
+            height: 52px;
+        }
+        .table td {
+            height: 66px;
+        }
+        .table th:nth-child(1), .table td:nth-child(1) { width: 80px; }
+        .table th:nth-child(2), .table td:nth-child(2) { width: 25%; }
+        .table th:nth-child(3), .table td:nth-child(3) { width: 20%; }
+        .table th:nth-child(4), .table td:nth-child(4) { width: 15%; }
+        .table th:nth-child(5), .table td:nth-child(5) { width: 120px; }
+        .table th:nth-child(6), .table td:nth-child(6) { width: 100px; }
         tr.pagination { display: none !important; }
         .pagination-bar {
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            padding: 10px 12px;
+            padding: 0 12px;
+            height: 54px;
             border-top: 1px solid #f0f0f0;
             background: #fff;
             border-radius: 0 0 4px 4px;
@@ -139,6 +169,30 @@
                     <span>You may borrow up to <strong>3 books</strong> and have up to <strong>3 pending requests</strong> at a time. All requests require librarian approval.</span>
                 </div>
 
+                <!-- Search & Filter -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <asp:TextBox ID="txtSearchBooks" runat="server" CssClass="form-control"
+                                placeholder="Search by title or author..."
+                                AutoPostBack="true" OnTextChanged="txtSearchBooks_TextChanged" />
+                            <asp:Button ID="btnSearchBooks" runat="server" Text="Search"
+                                CssClass="btn btn-outline-secondary" OnClick="btnSearchBooks_Click" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <asp:DropDownList ID="ddlCategory" runat="server" CssClass="form-select"
+                            AutoPostBack="true" OnSelectedIndexChanged="ddlCategory_SelectedIndexChanged">
+                            <asp:ListItem Value="">All Categories</asp:ListItem>
+                            <asp:ListItem Value="Programming">Programming</asp:ListItem>
+                            <asp:ListItem Value="Artificial Intelligence">Artificial Intelligence</asp:ListItem>
+                            <asp:ListItem Value="Data Communications">Data Communications</asp:ListItem>
+                            <asp:ListItem Value="Literature">Literature</asp:ListItem>
+                            <asp:ListItem Value="Business">Business</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                </div>
+
                 <!-- Available Books -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
@@ -146,35 +200,11 @@
                     </div>
                     <div class="card-body">
 
-                        <!-- Search & Filter -->
-                        <div class="row mb-3">
-                            <div class="col-md-6 mb-2">
-                                <div class="input-group">
-                                    <asp:TextBox ID="txtSearchBooks" runat="server" CssClass="form-control"
-                                        placeholder="Search by title or author..."
-                                        AutoPostBack="true" OnTextChanged="txtSearchBooks_TextChanged" />
-                                    <asp:Button ID="btnSearchBooks" runat="server" Text="Search"
-                                        CssClass="btn btn-outline-secondary" OnClick="btnSearchBooks_Click" />
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-2">
-                                <asp:DropDownList ID="ddlCategory" runat="server" CssClass="form-select"
-                                    AutoPostBack="true" OnSelectedIndexChanged="ddlCategory_SelectedIndexChanged">
-                                    <asp:ListItem Value="">All Categories</asp:ListItem>
-                                    <asp:ListItem Value="Fiction">Fiction</asp:ListItem>
-                                    <asp:ListItem Value="Non-Fiction">Non-Fiction</asp:ListItem>
-                                    <asp:ListItem Value="Science">Science</asp:ListItem>
-                                    <asp:ListItem Value="Technology">Technology</asp:ListItem>
-                                    <asp:ListItem Value="Business">Business</asp:ListItem>
-                                </asp:DropDownList>
-                            </div>
-                        </div>
-
                         <!-- Books Grid -->
                         <asp:GridView ID="gvAvailableBooks" runat="server"
                             CssClass="table table-hover align-middle"
                             AutoGenerateColumns="false" GridLines="None"
-                            AllowPaging="true" PageSize="8"
+                            AllowPaging="true" PageSize="5"
                             OnPageIndexChanging="gvAvailableBooks_PageIndexChanging"
                             OnRowCommand="gvAvailableBooks_RowCommand">
                             <Columns>

@@ -27,9 +27,7 @@
         .main-content { padding: 20px; }
         .action-buttons .btn { margin-right: 5px; }
         .card-body {
-            height: 786px;
             padding: 0;
-            position: relative;
         }
         .table {
             table-layout: fixed;
@@ -62,13 +60,11 @@
         .table th:nth-child(10), .table td:nth-child(10) { width: 120px; }
         tr.pagination { display: none !important; }
         .pagination-bar {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 54px;
             display: flex;
             align-items: center;
             justify-content: flex-start;
             padding: 0 12px;
+            height: 54px;
             border-top: 1px solid #f0f0f0;
             background: #fff;
             border-radius: 0 0 4px 4px;
